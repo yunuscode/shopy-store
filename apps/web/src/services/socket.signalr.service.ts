@@ -1,4 +1,6 @@
-import { HubConnectionBuilder, HubConnectionState } from '@microsoft/signalr';
+/* eslint-disable */
+import { HubConnectionBuilder, HubConnectionState } from "@microsoft/signalr";
+/* eslint-enable */
 
 import config from 'config';
 

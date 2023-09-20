@@ -7,12 +7,19 @@ import { configUtil } from 'utils';
  * This way you can ensure the app isn't built with invalid env vars.
  */
 const schema = z.object({
-  APP_ENV: z.enum(['development', 'staging', 'production']).default('development'),
-  IS_DEV: z.preprocess(() => process.env.APP_ENV === 'development', z.boolean()),
+  APP_ENV: z
+    .enum(['development', 'staging', 'production'])
+    .default('development'),
+  IS_DEV: z.preprocess(
+    () => process.env.APP_ENV === 'development',
+    z.boolean(),
+  ),
   PORT: z.coerce.number().optional().default(3001),
   MONGO_URI: z.string(),
   MONGO_DB_NAME: z.string(),
   REDIS_URI: z.string(),
+  STRIPE_KEY: z.string(),
+  STRIPE_SECRET: z.string(),
   API_URL: z.string(),
   WEB_URL: z.string(),
   SENDGRID_API_KEY: z.string().optional(),

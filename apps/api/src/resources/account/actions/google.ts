@@ -8,11 +8,12 @@ type ValidatedData = {
   given_name: string;
   family_name: string;
   email: string;
-  picture: string
+  picture: string;
 };
 
 const getOAuthUrl = async (ctx: AppKoaContext) => {
-  const isValidCredentials = config.GOOGLE_CLIENT_ID || config.GOOGLE_CLIENT_SECRET;
+  const isValidCredentials =
+    config.GOOGLE_CLIENT_ID || config.GOOGLE_CLIENT_SECRET;
 
   ctx.assertClientError(isValidCredentials, {
     global: 'Setup Google Oauth credentials on API',
@@ -24,30 +25,30 @@ const getOAuthUrl = async (ctx: AppKoaContext) => {
 const signInGoogleWithCode = async (ctx: AppKoaContext) => {
   const { code } = ctx.request.query;
 
-  const { isValid, payload } = await googleService.
-    exchangeCodeForToken(code as string) as { isValid: boolean, payload: ValidatedData };
+  const { isValid, payload } = (await googleService.exchangeCodeForToken(code as string)) as { isValid: boolean; payload: ValidatedData };
 
   ctx.assertError(isValid, `Exchange code for token error: ${payload}`);
 
-  const  user = await userService.findOne({ email: payload.email });
+  const user = await userService.findOne({ email: payload.email });
   let userChanged;
 
   if (user) {
     if (!user.oauth?.google) {
-      userChanged = await userService.updateOne(
-        { _id: user._id },
-        (old) => ({ ...old, oauth: { google: true } }),
-      );
+      userChanged = await userService.updateOne({ _id: user._id }, (old) => ({
+        ...old,
+        oauth: { google: true },
+      }));
     }
     const userUpdated = userChanged || user;
     await Promise.all([
       userService.updateLastRequest(userUpdated._id),
       authService.setTokens(ctx, userUpdated._id),
     ]);
-
   } else {
     const lastName = payload.family_name || '';
-    const fullName = lastName ? `${payload.given_name} ${lastName}` : payload.given_name;
+    const fullName = lastName
+      ? `${payload.given_name} ${lastName}`
+      : payload.given_name;
 
     const newUser = await userService.insertOne({
       firstName: payload.given_name,
@@ -72,9 +73,11 @@ const signInGoogleWithCode = async (ctx: AppKoaContext) => {
   ctx.redirect(config.WEB_URL);
 };
 
-
-
 export default (router: AppRouter) => {
   router.get('/sign-in/google/auth', getOAuthUrl);
   router.get('/sign-in/google', signInGoogleWithCode);
 };
+
+/**
+ * We are not using this file coz of there is google login feature in Figma design, but we may add it in the future!
+ */

@@ -1,4 +1,9 @@
-import { S3Client, GetObjectCommand, CopyObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
+import {
+  S3Client,
+  GetObjectCommand,
+  CopyObjectCommand,
+  DeleteObjectCommand,
+} from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { Upload } from '@aws-sdk/lib-storage';
 
@@ -16,7 +21,7 @@ import * as helpers from './cloud-storage.helper';
 
 const client = new S3Client({
   forcePathStyle: false, // Configures to use subdomain/virtual calling format.
-  region: 'us-east-1', // To successfully create a new bucket, this SDK requires the region to be us-east-1
+  region: 'us-east-2', // To successfully create a new bucket, this SDK requires the region to be us-east-1
   endpoint: config.CLOUD_STORAGE_ENDPOINT,
   credentials: {
     accessKeyId: config.CLOUD_STORAGE_ACCESS_KEY_ID ?? '',
@@ -25,7 +30,10 @@ const client = new S3Client({
 });
 const Bucket = config.CLOUD_STORAGE_BUCKET;
 
-const upload = (fileName: string, file: File): Promise<CompleteMultipartUploadOutput> => {
+const upload = (
+  fileName: string,
+  file: File,
+): Promise<CompleteMultipartUploadOutput> => {
   const params = {
     Bucket,
     ContentType: file.mimetype,
@@ -42,7 +50,10 @@ const upload = (fileName: string, file: File): Promise<CompleteMultipartUploadOu
   return multipartUpload.done();
 };
 
-const uploadPublic = (fileName: string, file: File): Promise<CompleteMultipartUploadOutput> => {
+const uploadPublic = (
+  fileName: string,
+  file: File,
+): Promise<CompleteMultipartUploadOutput> => {
   const params = {
     Bucket,
     ContentType: file.mimetype,
@@ -77,7 +88,10 @@ const getObject = (fileName: string): Promise<GetObjectOutput> => {
   return client.send(command);
 };
 
-const copyObject = (filePath: string, copyFilePath: string): Promise<CopyObjectOutput> => {
+const copyObject = (
+  filePath: string,
+  copyFilePath: string,
+): Promise<CopyObjectOutput> => {
   const command = new CopyObjectCommand({
     Bucket,
     CopySource: encodeURI(`${Bucket}/${copyFilePath}`),
@@ -88,7 +102,7 @@ const copyObject = (filePath: string, copyFilePath: string): Promise<CopyObjectO
 };
 
 const deleteObject = (fileName: string): Promise<DeleteObjectOutput> => {
-  const command = new DeleteObjectCommand( {
+  const command = new DeleteObjectCommand({
     Bucket,
     Key: fileName,
   });

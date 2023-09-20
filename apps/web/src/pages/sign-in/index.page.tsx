@@ -3,12 +3,17 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Head from 'next/head';
 import { NextPage } from 'next';
-import { TextInput, PasswordInput, Button, Group, Stack, Title, Alert } from '@mantine/core';
+import {
+  TextInput,
+  PasswordInput,
+  Button,
+  Group,
+  Stack,
+  Title,
+  Alert,
+} from '@mantine/core';
 import { IconAlertCircle } from '@tabler/icons-react';
 
-import { GoogleIcon } from 'public/icons';
-
-import config from 'config';
 import { RoutePath } from 'routes';
 import { handleError } from 'utils';
 import { Link } from 'components';
@@ -16,7 +21,9 @@ import { Link } from 'components';
 import { accountApi, accountConstants } from 'resources/account';
 
 const schema = z.object({
-  email: z.string().regex(accountConstants.emailRegex, 'Email format is incorrect.'),
+  email: z
+    .string()
+    .regex(accountConstants.emailRegex, 'Email format is incorrect.'),
   password: z.string().min(1, 'Please enter password'),
 });
 
@@ -24,7 +31,10 @@ type SignInParams = z.infer<typeof schema> & { credentials?: string };
 
 const SignIn: NextPage = () => {
   const {
-    register, handleSubmit, formState: { errors }, setError,
+    register,
+    handleSubmit,
+    formState: { errors },
+    setError,
   } = useForm<SignInParams>({ resolver: zodResolver(schema) });
 
   const { mutate: signIn, isLoading: isSignInLoading } = accountApi.useSignIn<SignInParams>();
@@ -46,6 +56,7 @@ const SignIn: NextPage = () => {
               <TextInput
                 {...register('email')}
                 label="Email Address"
+                size="md"
                 placeholder="Email Address"
                 error={errors.email?.message}
               />
@@ -53,6 +64,7 @@ const SignIn: NextPage = () => {
                 {...register('password')}
                 label="Password"
                 placeholder="Enter password"
+                size="md"
                 error={errors.password?.message}
               />
               {errors!.credentials && (
@@ -60,37 +72,18 @@ const SignIn: NextPage = () => {
                   {errors.credentials.message}
                 </Alert>
               )}
-              <Link
-                href={RoutePath.ForgotPassword}
-                type="router"
-                underline={false}
-                size="md"
-                align="center"
-              >
-                Forgot password?
-              </Link>
             </Stack>
-            <Button
-              loading={isSignInLoading}
-              type="submit"
-              fullWidth
-              mt={34}
-            >
+            <Button loading={isSignInLoading} type="submit" fullWidth mt={34}>
               Sign in
             </Button>
           </form>
         </Stack>
 
         <Stack spacing={34}>
-          <Button
-            component="a"
-            leftIcon={<GoogleIcon />}
-            href={`${config.API_URL}/account/sign-in/google/auth`}
-            variant="outline"
+          <Group
+            sx={{ fontSize: '16px', justifyContent: 'center' }}
+            spacing={12}
           >
-            Continue with Google
-          </Button>
-          <Group sx={{ fontSize: '16px', justifyContent: 'center' }} spacing={12}>
             Don’t have an account?
             <Link
               type="router"

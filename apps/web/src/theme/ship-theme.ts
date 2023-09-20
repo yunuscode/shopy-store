@@ -32,7 +32,7 @@ const shipTheme: MantineThemeOverride = {
   },
   components: {
     Button: {
-      defaultProps: { size: 'lg' },
+      defaultProps: { size: 'md' },
       styles: () => ({
         label: {
           fontWeight: 500,
@@ -41,7 +41,7 @@ const shipTheme: MantineThemeOverride = {
     },
     TextInput: {
       defaultProps: {
-        size: 'lg',
+        size: 'md',
       },
       styles: (theme: MantineTheme) => ({
         input: {
@@ -59,13 +59,14 @@ const shipTheme: MantineThemeOverride = {
           },
         },
         label: {
-          fontSize: '18px',
+          fontSize: '16px',
           fontWeight: 600,
+          marginBottom: 7,
         },
       }),
     },
     PasswordInput: {
-      defaultProps: { size: 'lg' },
+      defaultProps: { size: 'md' },
       styles: (theme: MantineTheme) => ({
         root: {
           input: {
@@ -77,8 +78,9 @@ const shipTheme: MantineThemeOverride = {
           },
         },
         label: {
-          fontSize: '18px',
+          fontSize: '16px',
           fontWeight: 600,
+          marginBottom: 7,
         },
         invalid: {
           input: {

@@ -6,6 +6,7 @@ export const useStyles = createStyles(() => ({
     padding: '0 32px',
     display: 'flex',
     flexDirection: 'column',
+    justifyContent: 'center',
   },
   content: {
     width: '100%',
@@ -18,5 +19,14 @@ export const useStyles = createStyles(() => ({
     minHeight: '72px',
     display: 'flex',
     alignItems: 'center',
+  },
+  imageWrapper: {
+    height: '100vh',
+    width: '100%',
+    padding: '0 32px',
+    backgroundImage: 'url("../images/ship.jpg")',
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'contain',
+    backgroundPosition: 'center',
   },
 }));

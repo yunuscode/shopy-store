@@ -11,7 +11,11 @@ export enum LayoutType {
 export enum RoutePath {
   // Private paths
   Home = '/',
-  Profile = '/profile',
+  Cart = '/cart',
+  Products = '/products',
+  AddProduct = '/products/add',
+  SuccessPayment = '/cart/success',
+  FailedPayment = '/cart/failed',
 
   // Auth paths
   SignIn = '/sign-in',
@@ -36,7 +40,23 @@ export const routesConfiguration: RoutesConfiguration = {
     scope: ScopeType.PRIVATE,
     layout: LayoutType.MAIN,
   },
-  [RoutePath.Profile]: {
+  [RoutePath.Cart]: {
+    scope: ScopeType.PRIVATE,
+    layout: LayoutType.MAIN,
+  },
+  [RoutePath.Products]: {
+    scope: ScopeType.PRIVATE,
+    layout: LayoutType.MAIN,
+  },
+  [RoutePath.AddProduct]: {
+    scope: ScopeType.PRIVATE,
+    layout: LayoutType.MAIN,
+  },
+  [RoutePath.SuccessPayment]: {
+    scope: ScopeType.PRIVATE,
+    layout: LayoutType.MAIN,
+  },
+  [RoutePath.FailedPayment]: {
     scope: ScopeType.PRIVATE,
     layout: LayoutType.MAIN,
   },

@@ -8,13 +8,6 @@ export const init = () => {
 
 export const setUser = (user: User | undefined) => {
   mixpanel.identify(user?._id);
-
-  if (user) {
-    mixpanel.people.set({
-      firstName: user.firstName,
-      lastName: user.lastName,
-    });
-  }
 };
 
 export const track = (event: string, data = {}) => {

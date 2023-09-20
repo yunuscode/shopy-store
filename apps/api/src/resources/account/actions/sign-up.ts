@@ -42,9 +42,6 @@ async function handler(ctx: AppKoaContext<ValidatedData>) {
 
   const user = await userService.insertOne({
     email,
-    firstName: 'Firstname',
-    lastName: 'lastnaem',
-    fullName: 'Fullname',
     passwordHash: hash.toString(),
     isEmailVerified: true,
   });
